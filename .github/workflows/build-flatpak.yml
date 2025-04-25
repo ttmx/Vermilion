@@ -40,7 +40,7 @@ jobs:
           flatpak build-bundle repo-dir my-electron-app.flatpak com.example.Vermilion
 
       - name: Upload Flatpak artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: electron-flatpak
           path: my-electron-app.flatpak

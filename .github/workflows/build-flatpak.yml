@@ -45,6 +45,7 @@ jobs:
 
       - name: Build Flatpak image
         run: |
+          flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
           flatpak-builder build com.example.Vermilion.json --install-deps-from=flathub --force-clean --user --install
 
       - name: Upload Flatpak repository

@@ -49,7 +49,7 @@ jobs:
 
       - name: Build Flatpak image
         run: |
-          flatpak-builder --repo=repo build-dir com.example.Vermilion.json
+          flatpak-builder --install-deps-from=flathub --force-clean --user --repo=repo build-dir com.example.Vermilion.json
 
       - name: Upload Flatpak repository
         uses: actions/upload-artifact@v4

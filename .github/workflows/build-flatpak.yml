@@ -25,6 +25,7 @@ jobs:
       - name: Install pnpm
         run: |
           npm install -g pnpm
+          export PATH=$(npm bin -g):$PATH
 
       - name: Install dependencies
         run: pnpm install

@@ -1,0 +1,23 @@
+{
+  "app-id": "com.example.Vermilion",
+  "runtime": "org.freedesktop.Platform",
+  "runtime-version": "22.08",
+  "sdk": "org.freedesktop.Sdk",
+  "command": "vermilion",
+  "modules": [
+    {
+      "name": "vermilion",
+      "buildsystem": "simple",
+      "build-commands": [
+        "pnpm install",
+        "pnpm run build"
+      ],
+      "sources": [
+        {
+          "type": "dir",
+          "path": "./"
+        }
+      ]
+    }
+  ]
+}

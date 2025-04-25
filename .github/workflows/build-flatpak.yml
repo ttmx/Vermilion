@@ -41,7 +41,7 @@ jobs:
           flatpak-builder --repo=repo build-dir com.example.Vermilion.json
 
       - name: Upload Flatpak repository
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: flatpak-repo
           path: repo

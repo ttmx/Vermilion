@@ -1,0 +1,54 @@
+name: Hackily Build Electron Flatpak
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-flatpak:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 10
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+      
+      - name: Build application
+        run: pnpm build:unpack
+
+      - name: Set up Flatpak environment
+        run: |
+          sudo apt update
+          sudo apt install -y flatpak flatpak-builder
+          flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
+      - name: Build Flatpak package
+        run: |
+          flatpak-builder --install-deps-from=flathub --install --force-clean build-dir com.example.Vermilion.ext.yml
+
+      - name: Bundle Flatpak
+        run: |
+          flatpak-builder --repo=repo-dir --force-clean --export-only build-dir com.example.Vermilion.ext.yml
+          flatpak build-bundle repo-dir my-electron-app.flatpak com.example.Vermilion.ext
+
+      - name: Upload Flatpak artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: electron-flatpak
+          path: my-electron-app.flatpak

@@ -1,0 +1,37 @@
+app-id: com.example.Vermilion.ext
+runtime: org.freedesktop.Platform
+runtime-version: '23.08'
+sdk: org.freedesktop.Sdk
+
+base-version: '23.08'
+
+command: /app/run.sh
+modules:
+  - name: vermilion
+    buildsystem: simple
+    build-commands:
+      - ls /app
+      - chmod +x run.sh
+      - cp -r * /app
+    sources:
+      - type: dir
+        path: ./dist/linux-unpacked
+        skip:
+          - .pnpm-store
+          - node_modules
+          - build-dir
+          - .flatpak
+          - .flatpak-builder
+      - type: script
+        dest-filename: run.sh
+        commands:
+          - /app/vermilion "$@" --no-sandbox --no-zygote --enable-features=UseOzonePlatform --ozone-platform-hint=auto --enable-features=WaylandWindowDecorations
+
+finish-args:
+  - --share=ipc
+  - --device=dri
+  - --socket=x11
+  - --socket=wayland
+  - --socket=pulseaudio
+  - --share=network
+  - --env=ELECTRON_TRASH=gio

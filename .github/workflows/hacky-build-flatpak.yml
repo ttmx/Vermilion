@@ -34,13 +34,17 @@ jobs:
 
       - name: Set up Flatpak environment
         run: |
-          sudo apt update
-          sudo apt install -y flatpak flatpak-builder
-          flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-
+           sudo apt update
+           sudo apt install -y flatpak flatpak-builder
+           export FLATPAK_USER_DIR=$HOME/.flatpak-user
+           mkdir -p $FLATPAK_USER_DIR
+           flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+ 
       - name: Build Flatpak package
+        env:
+           FLATPAK_USER_DIR: $HOME/.flatpak-user
         run: |
-          flatpak-builder --install-deps-from=flathub --install --force-clean build-dir com.example.Vermilion.ext.yml
+           flatpak-builder --user --install-deps-from=flathub --install --force-clean build-dir com.example.Vermilion.ext.yml\
 
       - name: Bundle Flatpak
         run: |

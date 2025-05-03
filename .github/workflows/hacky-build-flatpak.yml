@@ -39,8 +39,6 @@ jobs:
            flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
  
       - name: Build Flatpak package
-        env:
-           FLATPAK_USER_DIR: $HOME/.flatpak-user
         run: |
            flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
            flatpak-builder --user --install-deps-from=flathub --install --force-clean build-dir com.example.Vermilion.ext.yml

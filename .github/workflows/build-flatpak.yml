@@ -45,7 +45,7 @@ jobs:
       - name: Bundle Flatpak
         run: |
           flatpak-builder --repo=repo-dir --force-clean --export-only build-dir net.vaxry.Vermilion.yml
-          flatpak build-bundle repo-dir my-electron-app.flatpak net.vaxry.Vermilion
+          flatpak build-bundle repo-dir vermilion.flatpak net.vaxry.Vermilion
 
       - name: Upload Flatpak artifact
         uses: actions/upload-artifact@v4
